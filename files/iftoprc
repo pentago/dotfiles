@@ -1,0 +1,12 @@
+interface: en0
+dns-resolution: no
+port-resolution: no
+show-bars: yes
+promiscuous: yes
+port-display: on
+link-local: no
+use-bytes: yes
+sort: 40s
+line-display: two-line
+log-scale: yes
+show-totals: yes

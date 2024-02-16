@@ -1,0 +1,28 @@
+# https://github.com/jesseduffield/lazydocker/blob/master/docs/keybindings/Keybindings_en.md
+gui:
+  language: 'en'
+  returnImmediately: true
+  showBottomLine: false
+
+logs:
+  timestamps: true
+  since: ''
+  tail: '100'
+
+commandTemplates:
+  dockerCompose: docker compose
+
+customCommands:
+  containers:
+    - name: exec-sh
+      attach: true
+      command: docker exec -it {{ .Container.ID }} /bin/sh
+    - name: exec-bash
+      attach: true
+      command: docker exec -it {{ .Container.ID }} /bin/bash
+    - name: prune
+      command: 'docker system prune --all --volumes --force'
+  images:
+    - name: run-d
+      attach: true
+      command: 'docker run -d {{ .Image.ID }}'

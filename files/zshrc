@@ -1,0 +1,419 @@
+# ZSH profiling start
+# zmodload zsh/zprof
+
+# color converter https://ajalt.github.io/colormath/converter/
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# https://github.com/romkatv/powerlevel10k/blob/master/README.md#instant-prompt
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Shell settings
+setopt autocd
+
+# Environment
+export PATH=/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$HOMEBREW_PREFIX/opt/curl/bin:${HOME}/.krew/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
+export EDITOR='nvim'
+export VISUAL=$EDITOR
+export MANWIDTH=75
+export LESSCHARSET='UTF-8'
+export LESSHISTFILE='-'
+export LESSEDIT='vim ?lm+%lm. %f'
+export LESS='-sMEFRXI'
+export PAGER='less'
+export KUBE_EDITOR='code-insiders --wait'
+export DOCKER_BUILDKIT=1
+export SKAFFOLD_TRIGGER=polling
+export SKAFFOLD_WATCH_POLL_INTERVAL=1000
+export SKAFFOLD_TAIL=1
+export ANSIBLE_VAULT_PASSWORD_FILE=~/Library/CloudStorage/Dropbox/Sync/Ansible/ansible_password
+export RANGER_DEVICONS_SEPARATOR=" "
+export XDG_CONFIG_HOME="$HOME/.config"
+export K9S_CONFIG_DIR="$XDG_CONFIG_HOME/k9s"
+export ANTIDOTE_HOME=~/.cache/antidote
+
+# History settings
+setopt BANG_HIST
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
+setopt HIST_BEEP
+export HISTFILE="$HOME/.history"
+export HISTSIZE=10000000
+export SAVEHIST=$HISTSIZE
+
+# Locale
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Platform architecture detection
+if [[ `uname -m` =~ "x86_64" ]]
+  then export ARCH='amd64'
+elif [[ `uname -m` =~ "arm64" ]]
+  then export ARCH='arm64'
+fi
+
+if [[ `uname` =~ "Darwin" ]]
+  then export PLATFORM='mac'
+elif [[ `uname` =~ "Linux" ]]
+  then export PLATFORM='linux'
+fi
+
+# Homebrew architecture detection
+if [ "$ARCH" = arm64 ]
+then
+	export HOMEBREW_PREFIX=/opt/homebrew
+fi
+
+# 1Pasword - https://developer.1password.com/docs/cli/use-multiple-accounts/#:~:text=If%20you%20want%20to%20switch,added%20to%20your%201Password%20app.
+export PERSONAL="2GNNDSGFMZGTPKC7F5VHGUB27A"
+[[ "${PLATFORM}" == "mac" ]] && export SSH_AUTH_SOCK=~/.1password/agent.sock
+
+# https://dev.to/iggredible/how-to-search-faster-in-vim-with-fzf-vim-36ko
+if type rg &> /dev/null; then
+	export FZF_DEFAULT_COMMAND='rg --ignore-case --files --ignore-vcs --follow'
+  export FZF_DEFAULT_OPTS=" \
+  --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
+  --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
+  --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
+fi
+
+# Load kubeconfigs
+[[ ! -d ~/.kube ]] || export KUBECONFIG=$(find ~/.kube -type f -name "*.yaml" -exec printf "%s:" {} \; | sed 's/:$//')
+
+# krew plugins
+KREW_PLUGINS="
+  allctx
+  bulk-action
+  ca-cert
+  custom-cols
+  debug-shell
+  df-pv
+  doctor
+  evict-pod
+  explore
+  graph
+  hns
+  htpasswd
+  ingress-nginx
+  janitor
+  konfig
+  ktop
+  kubesec-scan
+  kurt
+  mc
+  neat
+  pod-inspect
+  pod-lens
+  pod-shell
+  podevents
+  pv-migrate
+  reap
+  reliably
+  roll
+  score
+  secretdata
+  split-yaml
+  view-cert
+  view-secret
+  view-utilization
+  viewnode
+  whisper-secret
+"
+
+if command -v kubectl &> /dev/null && [[ ! -d ~/.krew ]]; then
+  for plugin in $KREW_PLUGINS
+  do
+    kubectl krew install "$plugin"
+  done
+fi
+
+# Load completions
+autoload -Uz compinit && compinit
+
+# op
+if command -v op > /dev/null
+then
+  eval "$(op completion zsh)"; compdef _op op
+  source ~/.config/op/plugins.sh
+fi
+
+# fzf
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# tpm
+[[ ! -d ~/.tmux ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# tmux
+if [ ! -d ~/.tmux ]; then
+  echo "Setting up tmux"
+  tmux new-session -s CLI
+fi
+
+# Sync history
+[[ ! -f ~/Library/CloudStorage/Dropbox/Sync/zsh-history ]] || ln -sf ~/Library/CloudStorage/Dropbox/Sync/zsh-history ~/.history
+
+# Ranger plugins
+if command -v ranger >/dev/null 2>&1; then
+  if [[ ! -d ~/.config/ranger/plugins ]]; then
+    git clone git@github.com:cdump/ranger-devicons2.git ~/.config/ranger/plugins/devicons2
+    git clone git@github.com:MuXiu1997/ranger-fzf-filter.git ~/.config/ranger/plugins/fzf_filter
+  fi
+fi
+
+# Init Antidote
+[[ -d ~/.antidote ]] || git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
+source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+antidote load
+
+### Aliases
+alias ls="ls -alhpFG"
+alias sudo='sudo -E'
+alias bup='brew upgrade --greedy-latest --greedy-auto-updates && brew upgrade --cask --greedy-latest --greedy-auto-updates'
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+alias sv='sudo nvim'
+alias vdf='nvim -d'
+alias bat='bat --style=plain --theme=Nord'
+alias paste="curl -F 'f:1=<-' ix.io"
+alias rm='rm -rf'
+alias grep='grep --colour=auto'
+alias df='df -h'
+alias du='du -sh'
+alias h='history'
+alias r='ranger'
+alias sr='sudo ranger'
+alias gz='tar zxvf'
+alias bz='tar jxvf'
+alias 77='find . -type d -print0 | xargs -0 chmod 770 && find . -type f -print0 | xargs -0 chmod 660'
+alias att='tmux attach'
+alias kill='killall -s 9'
+alias vz='v ~/.zshrc'
+alias sz='source ~/.zshrc'
+alias al='antidote load'
+alias vv='v ~/.config/nvim/init.vim'
+alias vt='v ~/.tmux.conf'
+alias rw='sudo mount -o remount,rw /'
+alias ro='sudo mount -o remount,ro /'
+alias pg='ping google.com'
+alias t='todo.sh'
+alias tls='todo.sh list'
+alias code='code-insiders'
+alias vpn='sudo openfortivpn'
+alias kubeseal-pub='kubeseal --fetch-cert --controller-namespace kube-system > ~/sealed-secrets.pem'
+alias kubeseal-priv='kubectl --namespace kube-system get secrets --selector 'sealedsecrets.bitnami.com/sealed-secrets-key' --output name -o yaml | kubectl-neat -f -'
+alias 1password-accounts='eval $(op signin --account $PERSONAL) && eval $(op signin --account $ORIGO)'
+alias relin="sed -e 's/\([A-Z]\)/-\L\1/g' -e 's/^-//' -e 's/ /_/g' | tr '[:upper:]' '[:lower:]'"
+
+### Git
+alias gca='git config credential.helper cache'
+alias gcx='git credential-cache exit'
+alias grm='git rm -r --cached'
+alias grh='git reset --hard'
+alias gad='git add'
+alias gcm='git commit'
+alias gp='git pull'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gbl='git branch -l'
+alias gush='git push origin'
+alias gst='git status'
+alias glog='git log'
+alias gld='git log --diff-filter=D --summary'
+
+### Kubernetes
+alias k=kubectl
+alias kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
+alias kaf='kubectl apply -f'
+alias keti='kubectl exec -ti'
+alias kcuc='kubectl config use-context'
+alias kcsc='kubectl config set-context'
+alias kcdc='kubectl config delete-context'
+alias kccc='kubectl config current-context'
+alias kcgc='kubectl config get-contexts'
+alias kdel='kubectl delete'
+alias kdelf='kubectl delete -f'
+alias kza='kustomize build | kubectl apply -f -'
+alias kzd='kustomize build | kubectl delete -f -'
+alias kgp='kubectl get pods'
+alias kgpa='kubectl get pods --all-namespaces'
+alias kgpw='kgp --watch'
+alias kgpwide='kgp -o wide'
+alias kep='kubectl edit pods'
+alias kdp='kubectl describe pods'
+alias kdelp='kubectl delete pods'
+alias kgpall='kubectl get pods --all-namespaces -o wide'
+alias kgpl='kgp -l'
+alias kgpn='kgp -n'
+alias kgs='kubectl get svc'
+alias kgsa='kubectl get svc --all-namespaces'
+alias kgsw='kgs --watch'
+alias kgswide='kgs -o wide'
+alias kes='kubectl edit svc'
+alias kds='kubectl describe svc'
+alias kdels='kubectl delete svc'
+alias kgi='kubectl get ingress'
+alias kgia='kubectl get ingress --all-namespaces'
+alias kei='kubectl edit ingress'
+alias kdi='kubectl describe ingress'
+alias kdeli='kubectl delete ingress'
+alias kgns='kubectl get namespaces'
+alias kens='kubectl edit namespace'
+alias kdns='kubectl describe namespace'
+alias kdelns='kubectl delete namespace'
+alias kcn='kubectl config set-context --current --namespace'
+alias kgcm='kubectl get configmaps'
+alias kgcma='kubectl get configmaps --all-namespaces'
+alias kecm='kubectl edit configmap'
+alias kdcm='kubectl describe configmap'
+alias kdelcm='kubectl delete configmap'
+alias kgsec='kubectl get secret'
+alias kgseca='kubectl get secret --all-namespaces'
+alias kdsec='kubectl describe secret'
+alias kdelsec='kubectl delete secret'
+alias kgd='kubectl get deployment'
+alias kgda='kubectl get deployment --all-namespaces'
+alias kgdw='kgd --watch'
+alias kgdwide='kgd -o wide'
+alias ked='kubectl edit deployment'
+alias kdd='kubectl describe deployment'
+alias kdeld='kubectl delete deployment'
+alias ksd='kubectl scale deployment'
+alias krsd='kubectl rollout status deployment'
+alias kgrs='kubectl get rs'
+alias krh='kubectl rollout history'
+alias kru='kubectl rollout undo'
+alias kgss='kubectl get statefulset'
+alias kgssa='kubectl get statefulset --all-namespaces'
+alias kgssw='kgss --watch'
+alias kgsswide='kgss -o wide'
+alias kess='kubectl edit statefulset'
+alias kdss='kubectl describe statefulset'
+alias kdelss='kubectl delete statefulset'
+alias ksss='kubectl scale statefulset'
+alias krsss='kubectl rollout status statefulset'
+alias kpf="kubectl port-forward"
+alias kga='kubectl get all'
+alias kgaa='kubectl get all --all-namespaces'
+alias kl='kubectl logs'
+alias kl1h='kubectl logs --since 1h'
+alias kl1m='kubectl logs --since 1m'
+alias kl1s='kubectl logs --since 1s'
+alias klf='kubectl logs -f'
+alias klf1h='kubectl logs --since 1h -f'
+alias klf1m='kubectl logs --since 1m -f'
+alias klf1s='kubectl logs --since 1s -f'
+alias kcp='kubectl cp'
+alias kgno='kubectl get nodes'
+alias keno='kubectl edit node'
+alias kdno='kubectl describe node'
+alias kdelno='kubectl delete node'
+alias kgsc='kubectl get sc'
+alias kesc='kubectl edit sc'
+alias kdsc='kubectl describe sc'
+alias kdelsc='kubectl delete sc'
+alias kgpvc='kubectl get pvc'
+alias kgpvca='kubectl get pvc --all-namespaces'
+alias kgpvcw='kgpvc --watch'
+alias kepvc='kubectl edit pvc'
+alias kdpvc='kubectl describe pvc'
+alias kdelpvc='kubectl delete pvc'
+alias kgpv='kubectl get pv'
+alias kepv='kubectl edit pv'
+alias kdpv='kubectl describe pv'
+alias kdelpv='kubectl delete pv'
+alias kdsa="kubectl describe sa"
+alias kdelsa="kubectl delete sa"
+alias kgds='kubectl get daemonset'
+alias kgdsw='kgds --watch'
+alias keds='kubectl edit daemonset'
+alias kdds='kubectl describe daemonset'
+alias kdelds='kubectl delete daemonset'
+alias kgcj='kubectl get cronjob'
+alias kecj='kubectl edit cronjob'
+alias kdcj='kubectl describe cronjob'
+alias kdelcj='kubectl delete cronjob'
+alias kgen='kubectl get events --sort-by .lastTimestamp'
+alias kger='kubectl get events --field-selector type!=Normal --sort-by .lastTimestamp'
+
+# ArgoCD
+alias argocd-desync='argocd app set $1 --sync-policy none'
+alias argocd-setsync='argocd app set $1 --sync-policy automated --self-heal --auto-prune'
+alias argocd-orphans='argocd app list -o json | jq -r '\''.[] | select(.status.conditions[]? | .type == "OrphanedResourceWarning") | "\(.metadata.name): \((.status.conditions[] | select(.type == "OrphanedResourceWarning") | .message))"'\'
+
+# Kubeswitch
+[[ "${PLATFORM}" == "mac" ]] && INSTALLATION_PATH=$(brew --prefix switch) && source $INSTALLATION_PATH/switch.sh
+
+
+### Functions
+
+# iptables
+flush-iptables() {
+cat <<'EOF' | sudo iptables-restore
+  *filter
+  :INPUT ACCEPT [0:0]
+  :OUTPUT ACCEPT [0:0]
+  :FORWARD ACCEPT [0:0]
+  COMMIT
+EOF
+}
+
+# Bitbucket to Github Migration
+bb2gh() {
+  echo "Cloning repo"
+  git clone $1 $2
+  echo
+
+  echo "Entering repo directory"
+  cd $2
+  echo
+
+  echo "Adding remote"
+  git remote add upstream $3
+  echo
+
+  echo "Fetching all remote branches"
+  for remote in `git branch -r`; do git branch --track ${remote#origin/} $remote; done
+  echo
+
+  echo "Pushing"
+  git push --all upstream
+  git push --tags upstream
+  echo
+
+  echo "Setting Origin URL"
+  git remote set-url origin $3
+  echo
+
+  echo "Mirroring"
+  git push --mirror
+  cd ..
+  echo "Complete"
+}
+
+# List Shell Colors
+function color() {
+  for i in {0..255} ; do
+  printf "\x1b[38;5;${i}mcolour${i}\n"
+done
+}
+
+# Powerlevel10k settings
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# ZSH profiling end
+# zprof

@@ -1,0 +1,10 @@
+.DS_Store
+files/skaffold/cache
+*.log
+files/config/nvim/lazy-lock.json
+files/config/lazygit/state.yml
+files/config/k9s/clusters/*
+files/Vorta/settings.db-shm
+files/Vorta/settings.db-wal
+files/gitconfig
+files/config/ranger/plugins

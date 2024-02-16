@@ -1,0 +1,58 @@
+[user]
+email = purpleritza@gmail.com
+name = Goran Tepšić
+signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKoTioaZ2MLfb3Vwke5CpJYSV/49lexYj+FQJw0eirdn
+
+[core]
+fileMode = false
+excludesfile = ~/.gitignore_global
+editor = nvim
+
+[init]
+defaultBranch= main
+
+[pull]
+rebase = false
+
+[filter "lfs"]
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true
+
+[commit]
+gpgsign = true
+
+[gpg]
+format = ssh
+
+[gpg "ssh"]
+program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+allowedSignersFile = "~/.ssh/allowed_signers"
+
+[difftool "nvim"]
+cmd = nvim -d $LOCAL $REMOTE
+
+[difftool "vscode"]
+cmd = code-insiders --wait --diff $LOCAL $REMOTE
+
+[diff]
+tool = nvim
+
+[mergetool]
+keepBackup = true
+
+[mergetool "nvim"]
+cmd = nvim -d -c "wincmd l" -c "norm ]c" $LOCAL $MERGED $REMOTE
+
+[mergetool "vscode"]
+cmd = code-insiders --wait $MERGED
+
+[merge]
+tool = nvim
+
+[alias]
+dn = "!git difftool --no-prompt --tool=nvim"
+dv = "!git difftool --no-prompt --tool=vscode"
+mn = "!git mergetool --no-prompt --tool=nvim"
+mv = "!git mergetool --no-prompt --tool=vscode"

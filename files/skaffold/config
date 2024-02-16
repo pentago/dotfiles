@@ -1,0 +1,10 @@
+global:
+  local-cluster: true
+  survey:
+    disable-prompt: true
+    last-taken: "2021-10-10T18:03:45+02:00"
+    last-prompted: "2021-10-10T17:02:08+02:00"
+  collect-metrics: false
+  update:
+    last-prompted: "2022-08-15T16:55:07+02:00"
+kubeContexts: []

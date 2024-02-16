@@ -1,0 +1,48 @@
+### Docs - https://github.com/anishathalye/dotbot#getting-started
+
+- defaults:
+    link:
+      glob: true
+      create: true #
+      relink: true
+      force: true
+    create:
+      mode: 0700
+
+- clean: ['~']
+
+- link:
+    ~/.zshrc: files/zshrc
+    ~/.zsh_plugins.txt: files/zsh_plugins.txt
+    ~/.p10k.zsh: files/p10k.zsh
+    ~/.tmux.conf: files/tmux.conf
+    ~/.skaffold: files/skaffold
+    ~/.prettierrc: files/prettierrc
+    ~/.prettierignore: files/prettierignore
+    ~/.config/:
+      recursive: true
+      path: files/config/*
+      exclude: [files/config/borg, files/config/code, files/config/gcloud]
+
+- link:
+    # MacOS
+    ~/Brewfile:
+      path: files/Brewfile
+      if: '[ `uname` = Darwin ]'
+
+    ~/Library/Application Support/Vorta:
+      path: files/Vorta
+      if: '[ `uname` = Darwin ]'
+
+    ~/.gitconfig:
+      path: files/gitconfig.mac
+      if: '[ `uname` = Darwin ]'
+
+- link:
+    # Linux
+    ~/.gitconfig:
+      path: files/gitconfig.linux
+      if: '[ `uname` = Linux ]'
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
