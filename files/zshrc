@@ -91,7 +91,7 @@ if type rg &> /dev/null; then
 fi
 
 # Load kubeconfigs
-[[ ! -d ~/.kube ]] || export KUBECONFIG=$(find ~/.kube -type f -name "*.yaml" -exec printf "%s:" {} \; | sed 's/:$//')
+[[ ! -d ~/.oube ]] || export KUBECONFIG=$(find ~/.kube -type f -name "*.yaml" -exec printf "%s:" {} \; | sed 's/:$//')
 
 # krew plugins
 KREW_PLUGINS="
@@ -164,6 +164,9 @@ fi
 
 # Sync history
 [[ ! -f ~/Library/CloudStorage/Dropbox/Sync/zsh-history ]] || ln -sf ~/Library/CloudStorage/Dropbox/Sync/zsh-history ~/.history
+
+# Sync newsboat cache
+[[ ! -f ~/Library/CloudStorage/Dropbox/Sync/newsboat-cache.db ]] || ln -sf ~/Library/CloudStorage/Dropbox/Sync/newsboat-cache.db ~/.config/newsboat/cache.db
 
 # Ranger plugins
 if command -v ranger >/dev/null 2>&1; then

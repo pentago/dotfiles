@@ -1,0 +1,28 @@
+include dark
+
+auto-reload                               yes
+reload-threads                            30
+reload-time                               15
+refresh-on-startup                        yes
+display-article-progress                  yes
+goto-next-feed                            yes
+show-read-articles                        no
+show-read-feeds                           no
+text-width                                72
+confirm-mark-feed-read                    no
+confirm-mark-all-feeds-read               no
+delete-read-articles-on-quit              yes
+goto-next-feed                            yes
+openbrowser-and-mark-jumps-to-next-unread yes
+browser                                   "open -g -a 'Google Chrome' %u"
+wrap-scroll                               yes
+bookmark-autopilot                        yes
+datetime-format                           "%Y-%m-%d %H:%M:%S"
+
+ignore-mode "download"
+ignore-article "*" "title =~ \"Windows\"")
+ignore-article "*" "title =~ \"League\"")
+ignore-article "*" "title =~ \"Football\"")
+ignore-article "*" "title =~ \"Soccer\"")
+#ignore-article "https://feed/url1" "content =~ \"tele(phone|communications)\""
+

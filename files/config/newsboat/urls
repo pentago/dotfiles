@@ -1,0 +1,28 @@
+# queries
+"query:Last 24 Hours:age < 1"
+"query:Unread:unread = \"yes\""
+"query:Read:unread = \"no\""
+"query:All About - Kubernetes:(title =~ \"kubernetes\")"
+
+# urls
+https://news.ycombinator.com/rss "~Hacker News" "Tech"
+http://rss.slashdot.org/Slashdot/slashdot "~Slashdot" "Tech"
+https://restoreprivacy.com/feed/ "~Restore Privacy" "Tech"
+https://ma.ttias.be/cronweekly/index.xml "~Cron Weekly" "Tech"
+https://torrentfreak.com/feed "~TorrentFreak" "Torrents"
+https://kubernetes.io/feed.xml "~Kubernetes Blog" "DevOps"
+http://containerjournal.com/feed/ "~Container Journal" "DevOps"
+http://feeds.dzone.com/zones/server "~DZone: Servers" "DevOps"
+http://feeds.dzone.com/cloud "~DZone: Cloud" "DevOps"
+http://ahmetalpbalkan.com/blog/feed/rss.xml "~Ahmet Alp Balkan" "DevOps"
+http://thenewstack.io/feed/ "~The New Stack" "Tech"
+http://feeds.macrumors.com/MacRumors-All "~Mac Rumors" "Mac"
+http://osxdaily.com/feed/ "~OSX Daily" "Mac"
+http://www.cultofmac.com/feed/ "~Cult of Mac" "Mac"
+http://9to5mac.com/feed/ "~9to5 Mac" "Mac"
+https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml "~NY Times" "News"
+https://www.theguardian.com/uk/rss "~The Guardian" "News"
+https://apnews.com/index.rss "~AP" "News"
+https://www.reutersagency.com/feed/?taxonomy=best-topics&post_type=best "~Reuters" "News"
+https://www.google.com/alerts/feeds/03101941855068536000/5499252776418622870 "~Google Alerts"
+
