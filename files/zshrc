@@ -133,7 +133,8 @@ KREW_PLUGINS="
   whisper-secret
 "
 
-if command -v kubectl &> /dev/null && [[ ! -d ~/.krew ]]; then
+if command -v kubectl &> /dev/null && [[ ! -d ~/.krew ]]
+then
   for plugin in $KREW_PLUGINS
   do
     kubectl krew install "$plugin"
@@ -144,7 +145,7 @@ fi
 autoload -Uz compinit && compinit
 
 # op
-if command -v op > /dev/null
+if command -v op &> /dev/null
 then
   eval "$(op completion zsh)"; compdef _op op
   source ~/.config/op/plugins.sh
@@ -169,7 +170,8 @@ fi
 [[ ! -f ~/Library/CloudStorage/Dropbox/Sync/newsboat-cache.db ]] || ln -sf ~/Library/CloudStorage/Dropbox/Sync/newsboat-cache.db ~/.config/newsboat/cache.db
 
 # Ranger plugins
-if command -v ranger >/dev/null 2>&1; then
+if command -v ranger &> /dev/null
+then
   if [[ ! -d ~/.config/ranger/plugins ]]; then
     git clone git@github.com:cdump/ranger-devicons2.git ~/.config/ranger/plugins/devicons2
     git clone git@github.com:MuXiu1997/ranger-fzf-filter.git ~/.config/ranger/plugins/fzf_filter
