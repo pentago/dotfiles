@@ -22,10 +22,9 @@
     ~/.config/:
       recursive: true
       path: files/config/*
-      exclude: [files/config/borg, files/config/code, files/config/gcloud]
 
+  # MacOS
 - link:
-    # MacOS
     ~/Brewfile:
       path: files/Brewfile
       if: '[ `uname` = Darwin ]'
@@ -35,13 +34,21 @@
       if: '[ `uname` = Darwin ]'
 
     ~/.gitconfig:
-      path: files/gitconfig.mac
+      path: files/gitconfig
       if: '[ `uname` = Darwin ]'
 
+    ~/.gitconfig-personal:
+      path: files/gitconfig-personal
+      if: '[ `uname` = Darwin ]'
+
+    ~/.gitconfig-helix:
+      path: files/gitconfig-helix
+      if: '[ `uname` = Darwin ]'
+
+  # Linux
 - link:
-    # Linux
-    ~/.gitconfig:
-      path: files/gitconfig.linux
+    ~/.gitconfia-linux:
+      path: files/gitconfig-ext
       if: '[ `uname` = Linux ]'
 
 - shell:
