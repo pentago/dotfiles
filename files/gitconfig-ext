@@ -3,3 +3,42 @@
   email = pur876756+pentago@users.noreply.github.com
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKoTioaZ2MLfb3Vwke5CpJYSV/49lexYj+FQJw0eirdn
 
+[core]
+  fileMode = true
+  excludesfile = ~/.gitignore_global
+  editor = vim
+
+[init]
+  defaultBranch = main
+
+[pull]
+  rebase = false
+
+[gpg "ssh"]
+  allowedSignersFile = ~/.ssh/allowed_signers
+
+[gpg]
+  format = ssh
+
+[commit]
+  gpgsign = true
+
+[difftool "vim"]
+  cmd = vim -d $LOCAL $REMOTE
+
+[diff]
+  tool = vim
+
+[mergetool]
+  keepBackup = true
+
+[mergetool "vim"]
+  cmd = vim -d -c "wincmd l" -c "norm ]c" $LOCAL $MERGED $REMOTE
+
+[merge]
+  tool = vim
+
+[alias]
+  dn = "!git difftool --no-prompt --tool=vim"
+  mn = "!git mergetool --no-prompt --tool=vim"
+
