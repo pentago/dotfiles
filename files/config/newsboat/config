@@ -26,3 +26,9 @@ ignore-article "*" "title =~ \"Football\"")
 ignore-article "*" "title =~ \"Soccer\"")
 #ignore-article "https://feed/url1" "content =~ \"tele(phone|communications)\""
 
+# OldReader - https://newsboat.org/releases/2.34/docs/newsboat.html#_the_old_reader
+urls-source "oldreader"
+oldreader-login "dzhi"
+oldreader-passwordfile "~/Library/CloudStorage/Dropbox/Sync/oldreader-password.txt"
+oldreader-flag-star "b"
+
