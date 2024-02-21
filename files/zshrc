@@ -3,6 +3,9 @@
 
 # color converter https://ajalt.github.io/colormath/converter/
 
+# Shell settings
+setopt autocd
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -10,9 +13,6 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-# Shell settings
-setopt autocd
 
 # Environment
 export PATH=/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$HOMEBREW_PREFIX/opt/curl/bin:${HOME}/.krew/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
@@ -177,11 +177,6 @@ then
     git clone git@github.com:MuXiu1997/ranger-fzf-filter.git ~/.config/ranger/plugins/fzf_filter
   fi
 fi
-
-# Init Antidote
-[[ -d ~/.antidote ]] || git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
-antidote load
 
 ### Aliases
 alias ls="ls -alhpFG"
@@ -416,8 +411,11 @@ function color() {
 done
 }
 
-# Powerlevel10k settings
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# Load antidote
+source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+antidote load
+
+# Load powerlevel10k - to customize prompt, run `p10k configure` or edit ~/.p10k.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ZSH profiling end
