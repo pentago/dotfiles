@@ -1,0 +1,9 @@
+zmodule romkatv/powerlevel10k
+zmodule rupa/z
+zmodule changyuheng/zsh-interactive-cd
+zmodule zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-autosuggestions
+zmodule zdharma-continuum/fast-syntax-highlighting
+zmodule ohmyzsh/ohmyzsh --fpath plugins/colored-man-pages
+zmodule hchbaw/zce.zsh --name zce
+

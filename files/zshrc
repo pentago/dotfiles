@@ -9,13 +9,29 @@ setopt autocd
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-# https://github.com/romkatv/powerlevel10k/blob/master/README.md#instant-prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
+then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Initialize modules
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+
+# Setup zimfw
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]
+then
+    echo "Setting up zim.."
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
+
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]
+then
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+
 # Environment
-export PATH=/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$HOMEBREW_PREFIX/opt/curl/bin:~/.krew/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:~/.local/bin:$PATH
+export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$HOMEBREW_PREFIX/opt/curl/bin:~/.krew/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:~/.local/bin:$PATH
 export EDITOR='nvim'
 export VISUAL=$EDITOR
 export MANWIDTH=75
@@ -411,9 +427,11 @@ function color() {
 done
 }
 
-# Load antidote
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
-antidote load
+# Initialize modules
+source ${ZIM_HOME}/init.zsh
+
+# Setup zce keybinding
+bindkey "^x" zce
 
 # Load powerlevel10k
 # to customize prompt, run `p10k configure` or edit ~/.p10k.zsh

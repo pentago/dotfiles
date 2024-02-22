@@ -13,7 +13,7 @@
 
 - link:
     ~/.zshrc: files/zshrc
-    ~/.zsh_plugins.txt: files/zsh_plugins.txt
+    ~/.zimrc: files/zimrc
     ~/.p10k.zsh: files/p10k.zsh
     ~/.tmux.conf: files/tmux.conf
     ~/.skaffold: files/skaffold
