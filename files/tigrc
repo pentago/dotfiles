@@ -1,0 +1,109 @@
+
+color "---"                     96 default
+color "diff --"                 222 default
+color "--- "                    222 default
+color "+++ "                    222 default
+color "@@"                      5 default
+color "+"                       2 default
+color " +"                      2 default
+color "-"                       1 default
+color " -"                      1 default
+color "index "                  96 default
+color "old file mode "          222 default
+color "new file mode "          222 default
+color "deleted file mode "      222 default
+color "copy from "              222 default
+color "copy to "                222 default
+color "rename from "            222 default
+color "rename to "              222 default
+color "similarity "             222 default
+color "dissimilarity "          222 default
+color "\ No newline at end of file"   96 default
+color "diff-tree "               96 default
+color "Author: "                 6 default
+color "Commit: "                 5 default
+color "Tagger: "                 5 default
+color "Merge: "                  96 default
+color "Date: "                   222 default
+color "AuthorDate: "             222 default
+color "CommitDate: "             222 default
+color "TaggerDate: "             222 default
+color "Refs: "                   1 default
+color "Reflog: "                 1 default
+color "Reflog message: "         222 default
+color "stash@{"                  5 default
+color "commit "                  2 default
+color "parent "                  96 default
+color "tree "                    96 default
+color "author "                  2 default
+color "committer "               5 default
+color "    Signed-off-by:"       222 default
+color "    Acked-by:"             222 default
+color "    Reviewed-by:"          222 default
+color "    Helped-by:"            222 default
+color "    Reported-by:"          222 default
+color "    Mentored-by:"          222 default
+color "    Suggested-by:"         222 default
+color "    Cc:"                   222 default
+color "    Noticed-by:"           222 default
+color "    Tested-by:"            222 default
+color "    Improved-by:"          222 default
+color "    Thanks-to:"            222 default
+color "    Based-on-patch-by:"    222 default
+color "    Contributions-by:"     222 default
+color "    Co-authored-by:"       222 default
+color "    Requested-by:"         222 default
+color "    Original-patch-by:"    222 default
+color "    Inspired-by:"          222 default
+color default                    15 default  normal
+color cursor                    255 12 bold
+color status                    2 default
+color delimiter                 5 default
+color date                      96 default
+color mode                      6 default
+color id                        5 default
+color overflow                  1 default
+color header                    222 default
+color section                   6 default
+color directory                 222 default
+color file                      default default
+color grep.file                 96 default
+color file-size                 default default
+color line-number               6 default
+color title-blur                15 96
+color title-focus               15 96 bold
+color main-commit               default default
+color main-annotated            default default bold
+color main-tag                  5 default bold
+color main-local-tag            5 default
+color main-remote               222 default
+color main-replace              6 default
+color main-tracked              222 default bold
+color main-ref                  6 default
+color main-head                 6 default bold
+color stat-none                 default default
+color stat-staged               5 default
+color stat-unstaged             5 default
+color stat-untracked            5 default
+color help-group                96 default
+color help-action               222 default
+color diff-stat                 96 default
+color diff-add-highlight        2 default standout
+color diff-del-highlight        1 default standout
+color palette-0                 5 default
+color palette-1                 222 default
+color palette-2                 6 default
+color palette-3                 2 default
+color palette-4                 default default
+color palette-5                 15 default
+color palette-6                 1 default
+color palette-7                 222 default bold
+color palette-8                 222 default bold
+color palette-9                 6 default bold
+color palette-10                2 default bold
+color palette-11                default default bold
+color palette-12                15 default bold
+color palette-13                1 default bold
+color graph-commit              96 default
+color search-result             0 222
+

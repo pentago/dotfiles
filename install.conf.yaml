@@ -19,6 +19,7 @@
     ~/.skaffold: files/skaffold
     ~/.prettierrc: files/prettierrc
     ~/.prettierignore: files/prettierignore
+    ~/.tigrc: files/tigrc
     ~/.config/:
       recursive: true
       path: files/config/*
