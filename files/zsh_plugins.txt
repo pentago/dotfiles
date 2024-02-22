@@ -9,3 +9,4 @@ zsh-users/zsh-autosuggestions kind:defer
 zdharma-continuum/fast-syntax-highlighting kind:defer
 ael-code/zsh-colored-man-pages kind:defer
 jeffreytse/zsh-vi-mode
+rupa/z
