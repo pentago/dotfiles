@@ -2,6 +2,7 @@
 romkatv/powerlevel10k
 
 # Plugins
+rupa/z
 changyuheng/zsh-interactive-cd
 zsh-users/zsh-history-substring-search
 zsh-users/zsh-completions
@@ -9,4 +10,3 @@ zsh-users/zsh-autosuggestions kind:defer
 zdharma-continuum/fast-syntax-highlighting kind:defer
 ael-code/zsh-colored-man-pages kind:defer
 jeffreytse/zsh-vi-mode
-rupa/z
