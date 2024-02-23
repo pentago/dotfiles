@@ -444,6 +444,17 @@ zstyle ':zce:*' bg 'fg=244'
 zstyle ':zce:*' prompt-char '%{\e[1;35m%}Character:%{\e[0m%} '
 zstyle ':zce:*' prompt-key '%{\e[1;35m%}Key:%{\e[0m%} '
 
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
 # Load powerlevel10k
 # to customize prompt, run `p10k configure` or edit ~/.p10k.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
