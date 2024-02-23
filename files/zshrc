@@ -214,7 +214,7 @@ fi
 ### Aliases
 alias ls="ls -alhpF --color=always"
 alias sudo='sudo -E'
-alias bup='brew upgrade --greedy-latest --greedy-auto-updates && brew upgrade --cask --greedy-latest --greedy-auto-updates'
+alias bup='brew upgrade --greedy-latest --greedy-auto-updates --force && brew upgrade --cask --greedy-latest --greedy-auto-updates --force'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
