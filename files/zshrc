@@ -31,7 +31,16 @@ then
 fi
 
 # Environment
-export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$HOMEBREW_PREFIX/opt/curl/bin:~/.krew/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:~/.local/bin:$PATH
+# Homebrew
+if [[ "$PLATFORM" == "mac" ]]
+then
+  export HOMEBREW_PREFIX=$(brew --prefix)
+  export PATH=$HOMEBREW_PREFIX/bin:$PATH
+  export PATH=$HOMEBREW_PREFIX/sbin:$PATH
+  export PATH=$HOMEBREW_PREFIX/opt/curl/bin:$PATH
+  export PATH=$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH
+fi
+
 export EDITOR='nvim'
 export VISUAL=$EDITOR
 export MANWIDTH=75
@@ -85,12 +94,6 @@ if [[ `uname` =~ "Darwin" ]]
   then export PLATFORM='mac'
 elif [[ `uname` =~ "Linux" ]]
   then export PLATFORM='linux'
-fi
-
-# Homebrew architecture detection
-if [ "$ARCH" = arm64 ]
-then
-	export HOMEBREW_PREFIX=/opt/homebrew
 fi
 
 # 1Pasword - https://developer.1password.com/docs/cli/use-multiple-accounts/#:~:text=If%20you%20want%20to%20switch,added%20to%20your%201Password%20app.
