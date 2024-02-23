@@ -163,7 +163,7 @@ then
   done
 fi
 
-# Load completions
+### Completions
 autoload -Uz compinit && compinit
 
 # op
