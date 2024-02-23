@@ -3,7 +3,6 @@
 
 # color converter https://ajalt.github.io/colormath/converter/
 
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -80,7 +79,6 @@ export ANSIBLE_VAULT_PASSWORD_FILE=~/Library/CloudStorage/Dropbox/Sync/Ansible/a
 export RANGER_DEVICONS_SEPARATOR=" "
 export XDG_CONFIG_HOME="$HOME/.config"
 export K9S_CONFIG_DIR="$XDG_CONFIG_HOME/k9s"
-export ANTIDOTE_HOME=~/.cache/antidote
 
 # History settings
 setopt BANG_HIST
