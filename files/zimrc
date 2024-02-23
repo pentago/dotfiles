@@ -1,9 +1,29 @@
+# https://github.com/romkatv/powerlevel10k
 zmodule romkatv/powerlevel10k
-zmodule rupa/z
-zmodule changyuheng/zsh-interactive-cd
-zmodule zsh-users/zsh-history-substring-search
-zmodule zsh-users/zsh-autosuggestions
-zmodule zdharma-continuum/fast-syntax-highlighting
-zmodule ohmyzsh/ohmyzsh --fpath plugins/colored-man-pages
-zmodule hchbaw/zce.zsh --name zce
 
+# https://github.com/rupa/z
+zmodule rupa/z
+
+# https://github.com/changyuheng/zsh-interactive-cd
+zmodule changyuheng/zsh-interactive-cd
+
+# https://github.com/zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-history-substring-search
+
+# https://github.com/Aloxaf/fzf-tab
+zmodule Aloxaf/fzf-tab
+
+# httpsL//github.com/zsh-users/zsh-autosuggestions
+zmodule zsh-users/zsh-autosuggestions
+
+# https://github.com/zdharma/fast-syntax-highlighting
+zmodule zdharma-continuum/fast-syntax-highlighting
+
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colored-man-pages
+zmodule ohmyzsh/ohmyzsh --name colored-man-pages --fpath plugins/colored-man-pages
+
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/terraform
+zmodule ohmyzsh/ohmyzsh --name terraform --fpath plugins/terraform
+
+# https://github.com/hchbaw/zce.zsh
+zmodule hchbaw/zce.zsh --name zce
