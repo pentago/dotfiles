@@ -30,7 +30,26 @@ then
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
 
-# Environment
+### Environment
+
+# Locale
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Architecture & Platform detection
+if [[ `uname -m` =~ "x86_64" ]]
+  then export ARCH='amd64'
+elif [[ `uname -m` =~ "arm64" ]]
+  then export ARCH='arm64'
+fi
+
+if [[ `uname` =~ "Darwin" ]]
+  then export PLATFORM='mac'
+elif [[ `uname` =~ "Linux" ]]
+  then export PLATFORM='linux'
+fi
+
 # Homebrew
 if [[ "$PLATFORM" == "mac" ]]
 then
@@ -77,24 +96,6 @@ setopt HIST_BEEP
 export HISTFILE="$HOME/.history"
 export HISTSIZE=10000000
 export SAVEHIST=$HISTSIZE
-
-# Locale
-export LANGUAGE=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-# Platform architecture detection
-if [[ `uname -m` =~ "x86_64" ]]
-  then export ARCH='amd64'
-elif [[ `uname -m` =~ "arm64" ]]
-  then export ARCH='arm64'
-fi
-
-if [[ `uname` =~ "Darwin" ]]
-  then export PLATFORM='mac'
-elif [[ `uname` =~ "Linux" ]]
-  then export PLATFORM='linux'
-fi
 
 # 1Pasword - https://developer.1password.com/docs/cli/use-multiple-accounts/#:~:text=If%20you%20want%20to%20switch,added%20to%20your%201Password%20app.
 export PERSONAL="2GNNDSGFMZGTPKC7F5VHGUB27A"
