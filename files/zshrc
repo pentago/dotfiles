@@ -60,6 +60,8 @@ then
   export PATH=$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH
 fi
 
+export PATH=~/.krew/bin:$PATH
+export PATH=~/.local/bin:$PATH
 export EDITOR='nvim'
 export VISUAL=$EDITOR
 export LESSCHARSET='UTF-8'
