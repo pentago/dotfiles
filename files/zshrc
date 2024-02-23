@@ -155,6 +155,7 @@ KREW_PLUGINS="
   whisper-secret
 "
 
+# krew
 if command -v kubectl &> /dev/null && [[ ! -d ~/.krew ]]
 then
   for plugin in $KREW_PLUGINS
