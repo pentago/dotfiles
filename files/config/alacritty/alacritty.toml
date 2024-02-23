@@ -69,6 +69,7 @@ dynamic_padding = true
 dynamic_title = true
 opacity = 1
 blur = false
+option_as_alt = "Both"
 
 [window.dimensions]
 columns = 170
