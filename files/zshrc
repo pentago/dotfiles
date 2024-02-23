@@ -62,12 +62,13 @@ fi
 
 export EDITOR='nvim'
 export VISUAL=$EDITOR
-export MANWIDTH=75
 export LESSCHARSET='UTF-8'
 export LESSHISTFILE='-'
 export LESSEDIT='vim ?lm+%lm. %f'
 export LESS='-sMEFRXI'
 export PAGER='less'
+export MANPAGER="less -R --use-color -Dd+r -Du+b"
+export MANWIDTH=75
 export KUBE_EDITOR='code-insiders --wait'
 export DOCKER_BUILDKIT=1
 export SKAFFOLD_TRIGGER=polling
