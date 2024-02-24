@@ -20,10 +20,10 @@ zmodule zsh-users/zsh-autosuggestions
 zmodule zdharma-continuum/fast-syntax-highlighting
 
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colored-man-pages
-zmodule ohmyzsh/ohmyzsh --name colored-man-pages --fpath plugins/colored-man-pages
+zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
 
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/terraform
-zmodule ohmyzsh/ohmyzsh --name terraform --fpath plugins/terraform
+zmodule ohmyzsh/ohmyzsh --root plugins/terraform
 
 # https://github.com/hchbaw/zce.zsh
 zmodule hchbaw/zce.zsh --name zce
