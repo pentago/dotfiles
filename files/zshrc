@@ -11,24 +11,24 @@ then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Shell settings
-setopt autocd
+# Setup zim
+zstyle ':zim:zmodule' use 'degit'
+export ZIM_HOME=${HOME}/.zim
 
-# Initialize modules
-ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
-
-# Setup zimfw
-if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]
-then
-    echo "Setting up zim.."
-    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  echo "Setting up zim.."
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+  https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
 
-# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
-if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]
-then
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
+
+# Initialize modules
+source ${ZIM_HOME}/init.zsh
+
 
 ### Environment
 
@@ -38,15 +38,15 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # Architecture & Platform detection
-if [[ `uname -m` =~ "x86_64" ]]
+if [[ $(uname -m) =~ "x86_64" ]]
   then export ARCH='amd64'
-elif [[ `uname -m` =~ "arm64" ]]
+elif [[ $(uname -m) =~ "arm64" ]]
   then export ARCH='arm64'
 fi
 
-if [[ `uname` =~ "Darwin" ]]
+if [[ $(uname) =~ "Darwin" ]]
   then export PLATFORM='mac'
-elif [[ `uname` =~ "Linux" ]]
+elif [[ $(uname) =~ "Linux" ]]
   then export PLATFORM='linux'
 fi
 
@@ -60,7 +60,6 @@ then
   export PATH=$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH
 fi
 
-export PATH=~/.krew/bin:$PATH
 export PATH=~/.local/bin:$PATH
 export EDITOR='nvim'
 export VISUAL=$EDITOR
@@ -71,17 +70,44 @@ export LESS='-sMEFRXI'
 export PAGER='less'
 export MANPAGER="less -R --use-color -Dd+r -Du+b"
 export MANWIDTH=75
-export KUBE_EDITOR='code-insiders --wait'
 export DOCKER_BUILDKIT=1
-export SKAFFOLD_TRIGGER=polling
-export SKAFFOLD_WATCH_POLL_INTERVAL=1000
-export SKAFFOLD_TAIL=1
 export ANSIBLE_VAULT_PASSWORD_FILE=~/Library/CloudStorage/Dropbox/Sync/Ansible/ansible_password
 export RANGER_DEVICONS_SEPARATOR=" "
 export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export PATH=~/.krew/bin:$PATH
+export KUBE_EDITOR='code-insiders --wait'
+export SKAFFOLD_TRIGGER=polling
+export SKAFFOLD_WATCH_POLL_INTERVAL=1000
+export SKAFFOLD_TAIL=1
 export K9S_CONFIG_DIR="$XDG_CONFIG_HOME/k9s"
 
-# History settings
+# vi mode
+bindkey -v
+
+# Edit command line in editor with `vv`
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'vv' edit-command-line
+
+
+# Options
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt CD_SILENT
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+setopt PUSHD_TO_HOME
+setopt EXTENDED_GLOB
+setopt INTERACTIVE_COMMENTS
+setopt NO_BG_NICE
+setopt ALWAYS_TO_END
+setopt NO_CASE_GLOB
+setopt NO_LIST_BEEP
+setopt AUTO_LIST
+setopt COMPLETE_IN_WORD
+
+# History
 setopt BANG_HIST
 setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY
@@ -95,124 +121,12 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt HIST_BEEP
-export HISTFILE="$HOME/.history"
 export HISTSIZE=10000000
 export SAVEHIST=$HISTSIZE
-
-# 1Pasword - https://developer.1password.com/docs/cli/use-multiple-accounts/#:~:text=If%20you%20want%20to%20switch,added%20to%20your%201Password%20app.
-export PERSONAL="2GNNDSGFMZGTPKC7F5VHGUB27A"
-[[ "${PLATFORM}" == "mac" ]] && export SSH_AUTH_SOCK=~/.1password/agent.sock
-
-# https://dev.to/iggredible/how-to-search-faster-in-vim-with-fzf-vim-36ko
-if type rg &> /dev/null; then
-	export FZF_DEFAULT_COMMAND='rg --ignore-case --files --ignore-vcs --follow'
-  export FZF_DEFAULT_OPTS=" \
-  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-  --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
-fi
-
-# Load kubeconfigs
-[[ ! -d ~/.oube ]] || export KUBECONFIG=$(find ~/.kube -type f -name "*.yaml" -exec printf "%s:" {} \; | sed 's/:$//')
-
-# krew plugins
-KREW_PLUGINS="
-  allctx
-  bulk-action
-  ca-cert
-  custom-cols
-  debug-shell
-  df-pv
-  doctor
-  evict-pod
-  explore
-  graph
-  hns
-  htpasswd
-  ingress-nginx
-  janitor
-  konfig
-  ktop
-  kubesec-scan
-  kurt
-  mc
-  neat
-  pod-inspect
-  pod-lens
-  pod-shell
-  podevents
-  pv-migrate
-  reap
-  reliably
-  roll
-  score
-  secretdata
-  split-yaml
-  view-cert
-  view-secret
-  view-utilization
-  viewnode
-  whisper-secret
-"
-
-# krew
-if command -v kubectl &> /dev/null && [[ ! -d ~/.krew ]]
-then
-  for plugin in $KREW_PLUGINS
-  do
-    kubectl krew install "$plugin"
-  done
-fi
-
-### Completions
-
-# brew
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
-  autoload -Uz compinit
-  compinit
-fi
-
-autoload -Uz compinit && compinit
-
-# op
-if command -v op &> /dev/null
-then
-  eval "$(op completion zsh)"; compdef _op op
-  source ~/.config/op/plugins.sh
-fi
-
-# fzf
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
-# tpm
-[[ ! -d ~/.tmux ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-# tmux
-if [ ! -d ~/.tmux ]; then
-  echo "Setting up tmux"
-  tmux new-session -s CLI
-fi
-
-# Sync history
-[[ ! -f ~/Library/CloudStorage/Dropbox/Sync/zsh-history ]] || ln -sf ~/Library/CloudStorage/Dropbox/Sync/zsh-history ~/.history
-
-# Sync newsboat cache
-[[ ! -f ~/Library/CloudStorage/Dropbox/Sync/newsboat-cache.db ]] || ln -sf ~/Library/CloudStorage/Dropbox/Sync/newsboat-cache.db ~/.config/newsboat/cache.db
-
-# Ranger plugins
-if command -v ranger &> /dev/null
-then
-  if [[ ! -d ~/.config/ranger/plugins ]]; then
-    git clone git@github.com:cdump/ranger-devicons2.git ~/.config/ranger/plugins/devicons2
-    git clone git@github.com:MuXiu1997/ranger-fzf-filter.git ~/.config/ranger/plugins/fzf_filter
-  fi
-fi
+export HISTFILE="$HOME/.history"
 
 ### Aliases
-alias ls="ls -alhpF --color=always"
+alias ls="gls -alhpF --color=always"
 alias sudo='sudo -E'
 alias bup='brew upgrade --greedy-latest --greedy-auto-updates --force && brew upgrade --cask --greedy-latest --greedy-auto-updates --force'
 alias v='nvim'
@@ -387,8 +301,149 @@ alias argocd-desync='argocd app set $1 --sync-policy none'
 alias argocd-setsync='argocd app set $1 --sync-policy automated --self-heal --auto-prune'
 alias argocd-orphans='argocd app list -o json | jq -r '\''.[] | select(.status.conditions[]? | .type == "OrphanedResourceWarning") | "\(.metadata.name): \((.status.conditions[] | select(.type == "OrphanedResourceWarning") | .message))"'\'
 
-# Kubeswitch
-[[ "${PLATFORM}" == "mac" ]] && INSTALLATION_PATH=$(brew --prefix switch) && source $INSTALLATION_PATH/switch.sh
+
+# Setup zce
+zstyle ':zce:*' fg 'fg=16,bold'
+zstyle ':zce:*' bg 'fg=244'
+zstyle ':zce:*' prompt-char '%{\e[1;35m%}Character:%{\e[0m%} '
+zstyle ':zce:*' prompt-key '%{\e[1;35m%}Key:%{\e[0m%} '
+bindkey "^x" zce
+
+### Completions
+# if (( ${+LS_COLORS} )); then
+#   zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# else
+#   # Use same LS_COLORS definition from utility module, in case it was not set
+#   zstyle ':completion:*:default' list-colors ${(s.:.):-di=1;34:ln=35:so=32:pi=33:ex=31:bd=1;36:cd=1;33:su=30;41:sg=30;46:tw=30;42:ow=30;43}
+# fi
+zmodload zsh/complist
+autoload -Uz compinit && compinit
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ${XDG_CACHE_HOME}/zcompcache
+zstyle ':completion:*' complete true
+zstyle ':completion:*' menu select
+zstyle ':completion:*' complete-options true
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-dirs-first true
+zstyle ':completion:*' file-sort dummyvalue
+zstyle ':completion:*:descriptions' format '%B %F{green} # %d %f %b'
+zstyle ':completion:*:messages' format '%B %F{blue} # %d %f %b'
+zstyle ':completion:*:warnings' format '%B %F{red} # No matches found %f %b'
+zstyle ':completion:*:options' list-colors '=^(-- *)=34'
+zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' completer _extensions _complete _approximate
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion::complete:*' gain-privileges 1
+zstyle ':completion:*' rehash true
+
+### Tools
+
+# brew
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+# tpm
+[[ ! -d ~/.tmux ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# tmux
+if [ ! -d ~/.tmux ]; then
+  echo "Setting up tmux"
+  tmux new-session -s CLI
+fi
+
+# fzf
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# op
+if command -v op &> /dev/null
+then
+  eval "$(op completion zsh)"; compdef _op op
+  source ~/.config/op/plugins.sh
+fi
+
+# Ranger plugins
+if command -v ranger &> /dev/null
+then
+  if [[ ! -d ~/.config/ranger/plugins ]]; then
+    git clone git@github.com:cdump/ranger-devicons2.git ~/.config/ranger/plugins/devicons2
+    git clone git@github.com:MuXiu1997/ranger-fzf-filter.git ~/.config/ranger/plugins/fzf_filter
+  fi
+fi
+
+# 1Pasword - https://developer.1password.com/docs/cli/use-multiple-accounts/#:~:text=If%20you%20want%20to%20switch,added%20to%20your%201Password%20app.
+export PERSONAL="2GNNDSGFMZGTPKC7F5VHGUB27A"
+[[ "${PLATFORM}" == "mac" ]] && export SSH_AUTH_SOCK=~/.1password/agent.sock
+
+# https://dev.to/iggredible/how-to-search-faster-in-vim-with-fzf-vim-36ko
+if type rg &> /dev/null; then
+	export FZF_DEFAULT_COMMAND='rg --ignore-case --files --ignore-vcs --follow'
+  export FZF_DEFAULT_OPTS=" \
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+  --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+fi
+
+# Load kubeconfigs
+[[ ! -d ~/.kube ]] || export KUBECONFIG=$(find ~/.kube -type f -name "*.yaml" -exec printf "%s:" {} \; | sed 's/:$//')
+
+# krew plugins
+KREW_PLUGINS="
+  allctx
+  bulk-action
+  ca-cert
+  custom-cols
+  debug-shell
+  df-pv
+  doctor
+  evict-pod
+  explore
+  graph
+  hns
+  htpasswd
+  ingress-nginx
+  janitor
+  konfig
+  ktop
+  kubesec-scan
+  kurt
+  mc
+  neat
+  pod-inspect
+  pod-lens
+  pod-shell
+  podevents
+  pv-migrate
+  reap
+  reliably
+  roll
+  score
+  secretdata
+  split-yaml
+  view-cert
+  view-secret
+  view-utilization
+  viewnode
+  whisper-secret
+"
+
+# krew
+if command -v kubectl &> /dev/null && [[ ! -d ~/.krew ]]
+then
+  for plugin in $KREW_PLUGINS
+  do
+    kubectl krew install "$plugin"
+  done
+fi
+
+# Sync history
+[[ ! -f ~/Library/CloudStorage/Dropbox/Sync/zsh-history ]] || ln -sf ~/Library/CloudStorage/Dropbox/Sync/zsh-history ~/.history
+
+# Sync newsboat cache
+[[ ! -f ~/Library/CloudStorage/Dropbox/Sync/newsboat-cache.db ]] || ln -sf ~/Library/CloudStorage/Dropbox/Sync/newsboat-cache.db ~/.config/newsboat/cache.db
 
 
 ### Functions
@@ -443,28 +498,6 @@ function color() {
   printf "\x1b[38;5;${i}mcolour${i}\n"
 done
 }
-
-# Initialize modules
-source ${ZIM_HOME}/init.zsh
-
-# Setup zce keybinding
-bindkey "^x" zce
-zstyle ':zce:*' fg 'fg=16,bold'
-zstyle ':zce:*' bg 'fg=244'
-zstyle ':zce:*' prompt-char '%{\e[1;35m%}Character:%{\e[0m%} '
-zstyle ':zce:*' prompt-key '%{\e[1;35m%}Key:%{\e[0m%} '
-
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-# NOTE: don't use escape sequences here, fzf-tab will ignore them
-zstyle ':completion:*:descriptions' format '[%d]'
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-# switch group using `,` and `.`
-zstyle ':fzf-tab:*' switch-group ',' '.'
 
 # Load powerlevel10k
 # to customize prompt, run `p10k configure` or edit ~/.p10k.zsh
