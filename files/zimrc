@@ -23,4 +23,4 @@ zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
 zmodule hchbaw/zce.zsh --name zce
 
 # https://github.com/jeffreytse/zsh-vi-mode
-# zmodule jeffreytse/zsh-vi-mode
+zmodule jeffreytse/zsh-vi-mode
