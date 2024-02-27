@@ -106,6 +106,7 @@ setopt NO_CASE_GLOB
 setopt NO_LIST_BEEP
 setopt AUTO_LIST
 setopt COMPLETE_IN_WORD
+setopt COMPLETE_ALIASES
 
 # History
 setopt BANG_HIST
