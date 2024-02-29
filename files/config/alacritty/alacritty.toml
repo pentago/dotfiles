@@ -67,7 +67,7 @@ args = ["-l", "-i", "-c", "tmux new-session -A -D -s CLI"]
 decorations = "buttonless"
 dynamic_padding = true
 dynamic_title = true
-opacity = 1
+opacity = 0.97
 blur = false
 option_as_alt = "Both"
 
