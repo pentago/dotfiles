@@ -9,3 +9,4 @@ files/Vorta/settings.db-wal
 files/gitconfig
 files/config/ranger/plugins
 files/config/newsboat/cache.db*
+files/skaffold/config
