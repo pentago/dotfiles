@@ -239,3 +239,9 @@ keybinding:
     init: 'i'
     update: 'u'
     bulkMenu: 'b'
+
+customCommands:
+  - key: '<c-r>'
+    command: 'gh pr create --fill --web'
+    context: 'global'
+    loadingText: 'Creating pull request on GitHub'
