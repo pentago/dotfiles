@@ -239,3 +239,10 @@ keybinding:
     init: 'i'
     update: 'u'
     bulkMenu: 'b'
+
+# https://github.com/jesseduffield/lazygit/wiki/Custom-Commands-Compendium
+customCommands:
+  - key: '<c-r>'
+    command: 'gh pr create --fill --web'
+    context: 'localBranches'
+    loadingText: 'Creating pull request on GitHub'
