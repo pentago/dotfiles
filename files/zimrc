@@ -7,9 +7,6 @@ zmodule rupa/z
 # https://github.com/changyuheng/zsh-interactive-cd
 zmodule changyuheng/zsh-interactive-cd
 
-# https://github.com/zsh-users/zsh-history-substring-search
-zmodule zsh-users/zsh-history-substring-search
-
 # https://github.com/zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-autosuggestions
 
@@ -22,5 +19,3 @@ zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
 # https://github.com/hchbaw/zce.zsh
 zmodule hchbaw/zce.zsh --name zce
 
-# https://github.com/jeffreytse/zsh-vi-mode
-zmodule jeffreytse/zsh-vi-mode
