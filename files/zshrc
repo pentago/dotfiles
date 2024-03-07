@@ -83,13 +83,12 @@ export SKAFFOLD_TAIL=1
 export K9S_CONFIG_DIR="$XDG_CONFIG_HOME/k9s"
 
 # vi mode
-# bindkey -v
+bindkey -v
 
 # Edit command line in editor with `vv`
 autoload edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd '^[e' edit-command-line
-
+bindkey -M vicmd 'vv' edit-command-line
 
 # Options
 setopt AUTO_CD
