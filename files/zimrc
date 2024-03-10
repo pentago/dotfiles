@@ -10,6 +10,9 @@ zmodule changyuheng/zsh-interactive-cd
 # https://github.com/zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-autosuggestions
 
+# https://github.com/hlissner/zsh-autopair
+zmodule hlissner/zsh-autopair
+
 # https://github.com/zdharma/fast-syntax-highlighting
 zmodule zdharma-continuum/fast-syntax-highlighting
 
