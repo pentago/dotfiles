@@ -1,6 +1,6 @@
 # color area fgcolor bgcolor [attributes]
 
 color default white default
-color cursor 3 0 bold
+color cursor 5 0 bold
 color title-focus default 8 bold
 color title-blur default default bold
