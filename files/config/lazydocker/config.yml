@@ -26,3 +26,6 @@ customCommands:
     - name: run-d
       attach: true
       command: 'docker run -d {{ .Image.ID }}'
+    - name: run-it
+      attach: true
+      command: "docker run -it {{ .Image.ID }} sh"
