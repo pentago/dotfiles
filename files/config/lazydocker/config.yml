@@ -1,16 +1,32 @@
 # https://github.com/jesseduffield/lazydocker/blob/master/docs/keybindings/Keybindings_en.md
 gui:
-  language: 'en'
+  language: "en"
   returnImmediately: true
   showBottomLine: false
 
 logs:
   timestamps: true
-  since: ''
-  tail: '100'
+  since: ""
+  tail: "100"
 
 commandTemplates:
   dockerCompose: docker compose
+  restartService: "{{ .DockerCompose }} restart {{ .Service.Name }}"
+  up: "{{ .DockerCompose }} up -d"
+  down: "{{ .DockerCompose }} down"
+  downWithVolumes: "{{ .DockerCompose }} down --volumes"
+  upService: "{{ .DockerCompose }} up -d {{ .Service.Name }}"
+  startService: "{{ .DockerCompose }} start {{ .Service.Name }}"
+  stopService: "{{ .DockerCompose }} stop {{ .Service.Name }}"
+  serviceLogs: "{{ .DockerCompose }} logs --since=60m --follow {{ .Service.Name }}"
+  viewServiceLogs: "{{ .DockerCompose }} logs --follow {{ .Service.Name }}"
+  rebuildService: "{{ .DockerCompose }} up -d --build {{ .Service.Name }}"
+  recreateService: "{{ .DockerCompose }} up -d --force-recreate {{ .Service.Name }}"
+  allLogs: "{{ .DockerCompose }} logs --tail=300 --follow"
+  viewAlLogs: "{{ .DockerCompose }} logs"
+  dockerComposeConfig: "{{ .DockerCompose }} config"
+  checkDockerComposeConfig: "{{ .DockerCompose }} config --quiet"
+  serviceTop: "{{ .DockerCompose }} top {{ .Service.Name }}"
 
 customCommands:
   containers:
@@ -21,7 +37,7 @@ customCommands:
       attach: true
       command: docker exec -it {{ .Container.ID }} /bin/bash
     - name: prune
-      command: 'docker system prune --all --volumes --force'
+      command: "docker system prune --all --volumes --force"
   images:
     - name: run-d
       attach: true
