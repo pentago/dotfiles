@@ -81,6 +81,7 @@ export SKAFFOLD_TRIGGER=polling
 export SKAFFOLD_WATCH_POLL_INTERVAL=1000
 export SKAFFOLD_TAIL=1
 export K9S_CONFIG_DIR="$XDG_CONFIG_HOME/k9s"
+export KIND_EXPERIMENTAL_PROVIDER=podman
 
 # vi mode
 bindkey -v
