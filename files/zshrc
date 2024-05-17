@@ -60,6 +60,7 @@ then
   export PATH=$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH
 fi
 
+export HOMEBREW_CASK_OPTS="--no-quarantine"
 export PATH=~/.local/bin:$PATH
 export EDITOR='nvim'
 export VISUAL=$EDITOR
