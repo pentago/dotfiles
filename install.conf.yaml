@@ -9,14 +9,13 @@
     create:
       mode: 0700
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
     ~/.zshrc: files/zshrc
     ~/.zimrc: files/zimrc
     ~/.p10k.zsh: files/p10k.zsh
     ~/.tmux.conf: files/tmux.conf
-    ~/.skaffold: files/skaffold
     ~/.prettierrc: files/prettierrc
     ~/.prettierignore: files/prettierignore
     ~/.tigrc: files/tigrc
@@ -28,29 +27,29 @@
 - link:
     ~/Brewfile:
       path: files/Brewfile
-      if: '[ `uname` = Darwin ]'
+      if: "[ `uname` = Darwin ]"
 
     ~/Library/Application Support/Vorta:
       path: files/Vorta
-      if: '[ `uname` = Darwin ]'
+      if: "[ `uname` = Darwin ]"
 
     ~/.gitconfig:
       path: files/gitconfig
-      if: '[ `uname` = Darwin ]'
+      if: "[ `uname` = Darwin ]"
 
     ~/.gitconfig-personal:
       path: files/gitconfig-personal
-      if: '[ `uname` = Darwin ]'
+      if: "[ `uname` = Darwin ]"
 
     ~/.gitconfig-helix:
       path: files/gitconfig-helix
-      if: '[ `uname` = Darwin ]'
+      if: "[ `uname` = Darwin ]"
 
   # Linux
 - link:
     ~/.gitconfia-linux:
       path: files/gitconfig-ext
-      if: '[ `uname` = Linux ]'
+      if: "[ `uname` = Linux ]"
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
