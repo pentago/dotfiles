@@ -10,3 +10,4 @@ files/gitconfig
 files/config/ranger/plugins
 files/config/newsboat/cache.db*
 files/skaffold/config
+files/config/nvim/lazyvim.json
